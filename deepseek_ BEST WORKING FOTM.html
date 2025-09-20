@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoclave Sterilizer Repair Request</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e2efff 100%);
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #2c7db1;
+            padding-bottom: 20px;
+        }
+        h1 {
+            color: #2c7db1;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+        .subtitle {
+            color: #666;
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .form-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border-left: 4px solid #2c7db1;
+        }
+        h2 {
+            color: #2c7db1;
+            margin-top: 0;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+        }
+        h2 i {
+            margin-right: 10px;
+            font-size: 24px;
+        }
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px 15px;
+        }
+        .form-group {
+            flex: 1 0 300px;
+            padding: 0 10px;
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: #2c7db1;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(44, 125, 177, 0.2);
+        }
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .checkbox-group {
+            margin: 15px 0;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .checkbox-group input {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+        .required {
+            color: #e22;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        button {
+            background: #2c7db1;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        button i {
+            margin-right: 8px;
+        }
+        button:hover {
+            background: #1c5d8a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        #generatePdf {
+            background: #28a745;
+        }
+        #generatePdf:hover {
+            background: #218838;
+        }
+        .disclaimer {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin-top: 20px;
+        }
+        
+        /* Print Instructions */
+        .print-instructions {
+            background: #e8f4ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+            border-left: 5px solid #2c7db1;
+            text-align: center;
+        }
+        .print-instructions h2 {
+            color: #2c7db1;
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-align: center;
+            justify-content: center;
+        }
+        .print-steps {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        .print-step {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+        }
+        .print-step i {
+            font-size: 24px;
+            color: #2c7db1;
+            margin-bottom: 10px;
+        }
+        .print-step p {
+            margin: 0;
+            font-weight: 500;
+        }
+        
+        /* Submission Instructions */
+        .submission-instructions {
+            background: #e8f4ff;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid #2c7db1;
+        }
+        .submission-instructions h2 {
+            color: #2c7db1;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .instructions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .instruction-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        .instruction-card h3 {
+            color: #2c7db1;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+        }
+        .instruction-card h3 i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        .instruction-card ul {
+            padding-left: 20px;
+        }
+        .instruction-card li {
+            margin-bottom: 8px;
+        }
+        .contact-highlight {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: #2c7db1;
+            color: white;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        
+        /* PDF Template Styles - Keep visible for proper rendering */
+        #pdfTemplate {
+            position: fixed;
+            top: -10000px;
+            left: -10000px;
+            width: 210mm;
+            background: white;
+            visibility: hidden;
+        }
+        .pdf-page {
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: white;
+            color: black;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        .pdf-header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #2c7db1;
+            padding-bottom: 15px;
+        }
+        .pdf-header h1 {
+            color: #2c7db1;
+            font-size: 24px;
+            margin: 0 0 10px 0;
+        }
+        .pdf-section {
+            margin-bottom: 15px;
+            page-break-inside: avoid;
+        }
+        .pdf-section h2 {
+            color: #2c7db1;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 3px;
+            margin: 15px 0 10px 0;
+            font-size: 16px;
+        }
+        .pdf-field {
+            margin-bottom: 8px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .pdf-label {
+            font-weight: bold;
+            display: inline-block;
+            min-width: 150px;
+            color: #333;
+        }
+        .pdf-value {
+            flex: 1;
+            word-wrap: break-word;
+        }
+        .pdf-signature {
+            border-bottom: 1px solid #ddd;
+            height: 40px;
+            margin: 10px 0;
+            padding: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .form-group {
+                flex: 1 0 100%;
+            }
+            .container {
+                padding: 15px;
+            }
+            .button-group {
+                flex-direction: column;
+            }
+            h1 {
+                font-size: 28px;
+            }
+            .instructions-grid {
+                grid-template-columns: 1fr;
+            }
+            .print-steps {
+                flex-direction: column;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+                padding: 0;
+            }
+            .submission-instructions,
+            .print-instructions,
+            .button-group {
+                display: none;
+            }
+            .form-section {
+                border-left: none;
+                background: white;
+                padding: 10px 0;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-tools"></i> Autoclave Sterilizer Repair Request</h1>
+            <p class="subtitle">Complete this form to request repair services for your autoclave in the NYC/NJ area</p>
+        </header>
+
+        <div class="submission-instructions">
+            <h2><i class="fas fa-info-circle"></i> How to Submit This Form & What Happens Next</h2>
+            <div class="instructions-grid">
+                <div class="instruction-card">
+                    <h3><i class="fas fa-envelope"></i> Email</h3>
+                    <p>Send the completed form to <strong>acemedicaloffice@gmail.com</strong></p>
+                </div>
+                <div class="instruction-card">
+                    <h3><i class="fas fa-phone"></i> Phone</h3>
+                    <p>Call us at <strong>(718) 891-0333</strong> and have your completed form ready to reference</p>
+                </div>
+                <div class="instruction-card">
+                    <h3><i class="fas fa-globe"></i> Online</h3>
+                    <p>Fill out our digital version of this form on our website</p>
+                </div>
+            </div>
+            
+            <div class="instruction-card" style="margin-top: 20px;">
+                <h3><i class="fas fa-clipboard-list"></i> After submission, you can expect:</h3>
+                <ul>
+                    <li>A confirmation email or call within <strong>1 business hour</strong></li>
+                    <li>A preliminary estimate or schedule confirmation</li>
+                    <li>For on-site service, a technician will call <strong>30 minutes before arrival</strong></li>
+                </ul>
+            </div>
+            
+            <div class="contact-highlight">
+                <i class="fas fa-phone-alt"></i> For Immediate Assistance, Please Call: <strong>(718) 891-0333</strong>
+            </div>
+        </div>
+
+        <div class="print-instructions">
+            <h2><i class="fas fa-print"></i> How to Create a PDF of This Form</h2>
+            <p>After completing the form, follow these simple steps:</p>
+            <div class="print-steps">
+                <div class="print-step">
+                    <i class="fas fa-mouse-pointer"></i>
+                    <p>1. Press Ctrl+P (Cmd+P on Mac)</p>
+                </div>
+                <div class="print-step">
+                    <i class="fas fa-print"></i>
+                    <p>2. Choose "Save as PDF" as your printer</p>
+                </div>
+                <div class="print-step">
+                    <i class="fas fa-save"></i>
+                    <p>3. Click "Save" and choose a location</p>
+                </div>
+            </div>
+        </div>
+
+        <form id="repairForm">
+            <div class="form-section">
+                <h2><i class="fas fa-user-circle"></i> Contact Information</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="practiceName">Practice/Organization Name <span class="required">*</span></label>
+                        <input type="text" id="practiceName" name="practiceName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactName">Contact Person Name <span class="required">*</span></label>
+                        <input type="text" id="contactName" name="contactName" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="address">Service Address <span class="required">*</span></label>
+                        <input type="text" id="address" name="address" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">City <span class="required">*</span></label>
+                        <input type="text" id="city" name="city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State <span class="required">*</span></label>
+                        <select id="state" name="state" required>
+                            <option value="">Select State</option>
+                            <option value="NY">New York</option>
+                            <option value="NJ">New Jersey</option>
+                            <option value="CT">Connecticut</option>
+                            <option value="PA">Pennsylvania</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="zip">ZIP Code <span class="required">*</span></label>
+                        <input type="text" id="zip" name="zip" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2><i class="fas fa-cog"></i> Autoclave Information</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="brand">Brand/Manufacturer <span class="required">*</span></label>
+                        <select id="brand" name="brand" required>
+                            <option value="">Select Brand</option>
+                            <option value="Tuttnauer">Tuttnauer</option>
+                            <option value="Midmark">Midmark</option>
+                            <option value="SciCan">SciCan</option>
+                            <option value="Pelton & Crane">Pelton & Crane</option>
+                            <option value="Steris">Steris</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="model">Model Number</label>
+                        <input type="text" id="model" name="model">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="serial">Serial Number</label>
+                        <input type="text" id="serial" name="serial">
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Approximate Age</label>
+                        <select id="age" name="age">
+                            <option value="">Select Age</option>
+                            <option value="<2">Less than 2 years</option>
+                            <option value="2-5">2-5 years</option>
+                            <option value="5-10">5-10 years</option>
+                            <option value="10+">More than 10 years</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="type">Type of Autoclave <span class="required">*</span></label>
+                        <select id="type" name="type" required>
+                            <option value="">Select Type</option>
+                            <option value="Tabletop">Tabletop</option>
+                            <option value="Mid-Size">Mid-Size</option>
+                            <option value="Large Chamber">Large Chamber/Upright</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2><i class="fas fa-exclamation-circle"></i> Problem Description</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="problem">Please describe the problem you are experiencing <span class="required">*</span></label>
+                        <textarea id="problem" name="problem" required></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="errorCode">Error Code(s) Displayed (if any)</label>
+                        <input type="text" id="errorCode" name="errorCode">
+                    </div>
+                    <div class="form-group">
+                        <label for="startDate">When did the problem first start?</label>
+                        <input type="text" id="startDate" name="startDate">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Symptoms (check all that apply)</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="symptoms" value="no power"> Unit will not power on</label>
+                            <label><input type="checkbox" name="symptoms" value="door issue"> Door will not lock/seal properly</label>
+                            <label><input type="checkbox" name="symptoms" value="cycle issue"> Cycle starts but does not complete</label>
+                            <label><input type="checkbox" name="symptoms" value="error message"> Error message/code on display</label>
+                            <label><input type="checkbox" name="symptoms" value="water leak"> Leaking water</label>
+                            <label><input type="checkbox" name="symptoms" value="steam leak"> Leaking steam</label>
+                            <label><input type="checkbox" name="symptoms" value="noise"> Unusual noises (grinding, buzzing, hissing)</label>
+                            <label><input type="checkbox" name="symptoms" value="print issue"> Prints are faded/missing on cycle receipt</label>
+                            <label><input type="checkbox" name="symptoms" value="sterilization failure"> Sterilization failure (spore test failures)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2><i class="fas fa-concierge-bell"></i> Service Request Details</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="serviceType">Type of Service Needed <span class="required">*</span></label>
+                        <select id="serviceType" name="serviceType" required>
+                            <option value="">Select Service Type</option>
+                            <option value="emergency">Emergency Repair (Unit is down, need immediate service)</option>
+                            <option value="scheduled">Scheduled Repair (Please contact me to schedule)</option>
+                            <option value="maintenance">Preventive Maintenance / Tune-Up</option>
+                            <option value="diagnostic">Diagnostic Only (Please identify the problem and provide a quote)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Additional Needs</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="loaner" value="yes"> I require a loaner unit while mine is being repaired</label>
+                            <label><input type="checkbox" name="pickup" value="yes"> I need pickup service for in-shop repair</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="contactMethod">Preferred Contact Method</label>
+                        <select id="contactMethod" name="contactMethod">
+                            <option value="phone">Phone</option>
+                            <option value="email">Email</option>
+                            <option value="text">Text Message</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bestTime">Best Days/Times for Service</label>
+                        <input type="text" id="bestTime" name="bestTime" placeholder="e.g., Weekdays 9am-5pm">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2><i class="fas fa-file-signature"></i> Signature</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="signature">Signature (Type your full name) <span class="required">*</span></label>
+                        <input type="text" id="signature" name="signature" required placeholder="Type your full name as a digital signature">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="signatureDate">Date <span class="required">*</span></label>
+                        <input type="text" id="signatureDate" name="signatureDate" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" id="authorization" required> I authorize a service technician to diagnose the listed equipment. I understand that a diagnostic fee may apply, which may be waived if I proceed with the recommended repairs.</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="disclaimer">By submitting this form, you agree to our terms of service. A representative will contact you within 1 business day to discuss your repair needs.</p>
+        </form>
+    </div>
+
+    <!-- Hidden PDF Template -->
+    <div id="pdfTemplate">
+        <div class="pdf-page">
+            <div class="pdf-header">
+                <h1>Autoclave Sterilizer Repair Request</h1>
+                <p>Generated on <span id="pdfDate"></span></p>
+            </div>
+            
+            <div class="pdf-section">
+                <h2>Contact Information</h2>
+                <div class="pdf-field">
+                    <span class="pdf-label">Practice/Organization:</span>
+                    <span class="pdf-value" id="pdfPracticeName"></span>
+                </div>
+                <div class="pdf-field">
+                    <span class="pdf-label">Contact Person:</span>
+                    <span class="pdf-value" id="pdfContactName"></span>
+                </div>
+                <div class="pdf-field">
+                    <span class="pdf-label">Phone:</span>
+                    <span class="pdf-value" id="pdfPhone"></span>
+                </div>
+                <div class="pdf-field">
+                    <span class="pdf-label">Email:</span>
+                    <span class="pdf-value" id="pdfEmail"></span>
+                </div>
+                <div class="pdf-field">
+                    <span class="pdf-label">Address:</span>
+                    <span class="pdf-value" id="pdfAddress"></span>
+                </div>
+                <div class="pdf-field">
+                    <span class="pdf-label">City/State/ZIP:</span>
+                    <span class="pdf-value" id="pdfCityStateZip"></span>
+                </div>
+            </div>
+            
+            <div class="pdf-section">
+                <h2>Autoclave Information</h2>
+                <div class="pdf-field">
+                    <span class="pdf-label">Brand/Manufacturer:</span>
+                    <span class="pdf-value" id="pdfBrand"></span>
+                </div>
+                <div class="pdf-field">
+                    <span class="pdf-label">Model Number:</span>
+                    <span class="pdf-value" id="pdfModel"></span>
+                </div>
+                <div class="pdf-field">
+                    <span class="pdf-label">Serial Number:</span>
+                    <span class="pdf-value" id="pdfSerial"></span>
+                </div>
+                <div class="pdf-field">
+                    <span class="pdf-label">Approximate Age:</span>
+                    <span class="pdf-value" id="pdfAge"></span>
+                </div>
+                <div class="pdf-field">
+                    <span class="pdf-label">Type:</span>
+                    <span class="pdf-value" id="pdfType"></span>
+                </div>
+            </div>
+            
+            <div class="pdf-section">
+                <h2>Problem Description</h2>
+                <div class="pdf-field">
+                    <span class="pdf-label">Problem Description:</span>
+                    <span class="pdf-value" id="pdfProblem"></span>
+                </div>
+                <div class="pdf-field">
+                    <span class="pdf-label">Error Code(s):</span>
+                    <span class="pdf-value" id="pdfErrorCode"></span>
+                </div>
+                <div class="pdf-field">
+                    <span class="pdf-label">Problem Started:</span>
+                    <span class="pdf-value" id="pdfStartDate"></span>
+                </div>
+                <div class="pdf-field">
+                    <span class="pdf-label">Symptoms:</span>
+                    <span class="pdf-value" id="pdfSymptoms"></span>
+                </div>
+            </div>
+            
+            <div class="pdf-section">
+                <h2>Service Request Details</h2>
+                <div class="pdf-field">
+                    <span class="pdf-label">Service Type:</span>
+                    <span class="pdf-value" id="pdfServiceType"></span>
+                </div>
+                <div class="pdf-field">
+                    <span class="pdf-label">Additional Needs:</span>
+                    <span class="pdf-value" id="pdfAdditionalNeeds"></span>
+                </div>
+                <div class="pdf-field">
+                    <span class="pdf-label">Preferred Contact:</span>
+                    <span class="pdf-value" id="pdfContactMethod"></span>
+                </div>
+                <div class="pdf-field">
+                    <span class="pdf-label">Best Time for Service:</span>
+                    <span class="pdf-value" id="pdfBestTime"></span>
+                </div>
+            </div>
+            
+            <div class="pdf-section">
+                <h2>Authorization</h2>
+                <div class="pdf-field">
+                    <span class="pdf-label">Signature:</span>
+                    <span class="pdf-value" id="pdfSignature"></span>
+                </div>
+                <div class="pdf-field">
+                    <span class="pdf-label">Date:</span>
+                    <span class="pdf-value" id="pdfSignatureDate"></span>
+                </div>
+                <div class="pdf-field">
+                    <span class="pdf-label">Authorization:</span>
+                    <span class="pdf-value">I authorize service as described above</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set today's date as default for signature date
+        const today = new Date();
+        const dateString = today.toLocaleDateString();
+        document.getElementById('signatureDate').value = dateString;
+        
+        // Remove unused signature pad code
+    </script>
+</body>
+</html>
